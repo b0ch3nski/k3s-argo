@@ -1,0 +1,22 @@
+services:
+  k3s:
+    image: "${APP_NAME}:${APP_VERSION}"
+    privileged: true
+    restart: always
+    environment:
+      - K3S_KUBECONFIG_OUTPUT=/cfg/kubeconfig.yml
+      - K3S_KUBECONFIG_MODE=666
+    volumes:
+      - pv:/var/lib/rancher/k3s/storage
+      - /tmp/k3s:/cfg
+    networks:
+      - k3s
+    ports:
+      - 6443:6443
+      - 2746:2746
+
+networks:
+  k3s:
+
+volumes:
+  pv:

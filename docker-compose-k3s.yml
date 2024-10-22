@@ -1,0 +1,26 @@
+services:
+  k3s:
+    image: "rancher/k3s:${K3S_VERSION}"
+    command: server --disable=traefik,metrics-server --disable-network-policy
+    privileged: true
+    restart: always
+    environment:
+      - K3S_TOKEN=${K3S_TOKEN:-t0k3n}
+      - K3S_KUBECONFIG_OUTPUT=/cfg/kubeconfig.yml
+      - K3S_KUBECONFIG_MODE=666
+    tmpfs:
+      - /run
+      - /var/run
+    volumes:
+      - k3s:/var/lib/rancher/k3s
+      - /tmp/k3s:/cfg
+    networks:
+      - k3s
+    ports:
+      - 6443:6443
+
+networks:
+  k3s:
+
+volumes:
+  k3s:
