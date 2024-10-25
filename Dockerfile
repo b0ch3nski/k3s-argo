@@ -17,7 +17,5 @@ FROM scratch
 COPY --from=base / /
 COPY --from=tools /tools/ /usr/local/bin/
 
-EXPOSE 6443/tcp 2746/tcp
-ENV PATH=${PATH}:/bin/aux K3S_NODE_NAME=master K3S_TOKEN=t0k3n
-
+ENV PATH=${PATH}:/bin/aux K3S_NODE_NAME=master K3S_TOKEN=t0k3n K3S_KUBECONFIG_OUTPUT=/cfg/kubeconfig.yml
 CMD ["k3s", "server", "--disable=traefik,metrics-server", "--disable-network-policy", "--snapshotter=native"]

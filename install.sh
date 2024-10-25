@@ -5,9 +5,9 @@ k3s server --disable=traefik,metrics-server --disable-network-policy --snapshott
 k3s_pid="${!}"
 until kubectl get nodes | grep -q Ready; do echo "Waiting for master node"; sleep 1; done
 
-kubectl create namespace argo
-kubectl -n argo apply -f "https://github.com/argoproj/argo-workflows/releases/download/v${ARGO_VERSION}/quick-start-minimal.yaml"
-kubectl -n argo patch service argo-server -p '{"spec": {"type": "LoadBalancer"}}'
+for script in install.d/*.sh; do
+  ./${script}
+done
 
 # FIXME: wait for resource creation
 sleep 60

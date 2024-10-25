@@ -29,7 +29,7 @@ build {
     env = {
       "ARGO_VERSION" = var.argo_version
     }
-    script  = "run-k3s_install-argo.sh"
+    script  = "install.sh"
     timeout = "15m"
   }
 
