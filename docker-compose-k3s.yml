@@ -1,6 +1,6 @@
 services:
   k3s:
-    image: "rancher/k3s:${K3S_VERSION}"
+    image: "rancher/k3s:v${K3S_VERSION}"
     command: server --disable=traefik,metrics-server --disable-network-policy
     privileged: true
     restart: always
