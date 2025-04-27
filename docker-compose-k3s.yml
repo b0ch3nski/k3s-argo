@@ -1,13 +1,15 @@
 services:
   k3s:
+    container_name: k3s
     image: "rancher/k3s:v${K3S_VERSION}"
-    command: server --disable=traefik,metrics-server --disable-network-policy
+    command: server --disable=traefik,metrics-server --snapshotter=native --flannel-backend=host-gw
     privileged: true
     restart: always
     environment:
       - K3S_TOKEN=${K3S_TOKEN:-t0k3n}
+      - K3S_KUBECONFIG_MODE=644
       - K3S_KUBECONFIG_OUTPUT=/cfg/kubeconfig.yml
-      - K3S_KUBECONFIG_MODE=666
+      - KUBECONFIG=/cfg/kubeconfig.yml
     tmpfs:
       - /run
       - /var/run
